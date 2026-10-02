@@ -1,20 +1,69 @@
 package com.example.aposentadoria
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.aposentadoria.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        setContentView(binding.root)
+
+        // Dados para o Spinner
+        val items = listOf<String>("Homem", "Mulher")
+
+        // COnfiguração do Adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Associa o adapter ao Spinner
+        binding.spinner.adapter = adapter
+
+        val genero = if (binding.spinner.selectedItemPosition == 0){
+            1
+        } else {
+            2
         }
+
+
+
+
+        binding.button.setOnClickListener{
+            calcular(genero)
+        }
+
     }
+
+    fun calcular(genero: Int){
+        val idadeTexto = binding.textInputEditText.text.toString()
+
+        if (idadeTexto.isEmpty()){
+            binding.textView.text = "Informe uma idade!"
+        } else{
+            if (genero == 1){
+                if (idadeTexto.toInt() < 65){
+                    binding.textView.text = "Faltam ${65 - idadeTexto.toInt()} anos para você se aposentar!"
+                } else {
+                    binding.textView.text = "Você já deveria estar aposentado!"
+                }
+            } else {
+                if (idadeTexto.toInt() < 62){
+                    binding.textView.text = "Faltam ${62 - idadeTexto.toInt()} anos para você se aposentar!"
+                } else {
+                    binding.textView.text = "Você já deveria estar aposentada!"
+            }
+        }
+
+
+    }
+}
 }

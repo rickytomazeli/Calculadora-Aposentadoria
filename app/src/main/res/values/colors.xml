@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
     <color name="red">#FF0000</color>
+    <color name="degrade1">#03A9F4</color>
+    <color name="degrade2">#FFFFFF</color>
+    <color name="degrade3">#CA1250</color>
 </resources>
