@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Dados para o Spinner
-        val items = listOf<String>("Homem", "Mulher")
+        val items = listOf<String>("Masculino", "Feminino")
 
         // COnfiguração do Adapter
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
@@ -28,28 +28,25 @@ class MainActivity : AppCompatActivity() {
         // Associa o adapter ao Spinner
         binding.spinner.adapter = adapter
 
-        val genero = if (binding.spinner.selectedItemPosition == 0){
-            1
-        } else {
-            2
-        }
+
 
 
 
 
         binding.button.setOnClickListener{
+            val genero = binding.spinner.selectedItem.toString()
             calcular(genero)
         }
 
     }
 
-    fun calcular(genero: Int){
+    fun calcular(genero: String){
         val idadeTexto = binding.textInputEditText.text.toString()
 
         if (idadeTexto.isEmpty()){
             binding.textView.text = "Informe uma idade!"
         } else{
-            if (genero == 1){
+            if (genero == "Masculino"){
                 if (idadeTexto.toInt() < 65){
                     binding.textView.text = "Faltam ${65 - idadeTexto.toInt()} anos para você se aposentar!"
                 } else {
